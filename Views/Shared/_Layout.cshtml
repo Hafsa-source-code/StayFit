@@ -1,0 +1,131 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    // Get the theme cookie value.. default to LightMode
+    var theme = Context.Request.Cookies["Theme"] ?? "LightMode";
+    var flashMessage = TempData["FlashMessage"] as string;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - StayFit</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body.LightMode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.DarkMode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dashboard-box {
+            border: 1px solid #cdeac0;
+            background-color: #e6ffe6;
+            transition: 0.2s;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .dashboard-box:hover {
+            transform: scale(1.03);
+            background-color: #d9ffd9;
+            cursor: pointer;
+        }
+
+        .logout-box {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .logout-box:hover {
+            background-color: #b52a37;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100 @theme">
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">StayFit</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="About" asp-action="About">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Contact" asp-action="Contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mb-3">
+            <button id="toggleThemeBtn" class="btn btn-sm btn-secondary">Toggle Theme</button>
+        </div>
+    </header>
+    @if(!string.IsNullOrEmpty(flashMessage))
+    {
+        <div class="container mt-2">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @flashMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="mt-auto py-3 bg-dark text-white text-center">
+        <div class="container">
+            &copy; 2025 - StayHealthy - StayFit - 
+            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        $("#toggleThemeBtn").click(function(){
+            let currentTheme = $("body").hasClass("DarkMode") ? "DarkMode" : "LightMode";
+            let newTheme = currentTheme === "DarkMode" ? "LightMode" : "DarkMode";
+
+            $.post("/Home/SetTheme", { theme: newTheme }, function() {
+                $("body").removeClass(currentTheme).addClass(newTheme);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+@{
+    ViewData["Title"] = "User Dashboard";
+
+    var lastWeight = Context.Request.Cookies["LastProgressWeight"];
+    var lastDate = Context.Request.Cookies["LastProgressDate"];
+}
+
+@if(!string.IsNullOrEmpty(lastWeight))
+{
+    <div class="alert alert-info">
+        Last recorded weight: @lastWeight kg on @lastDate
+    </div>
+}
+@{
+    var flashMessage = Context.Session.GetString("FlashMessage");
+    if (!string.IsNullOrEmpty(flashMessage))
+    {
+        <div class="alert alert-success">
+            @flashMessage
+        </div>
+        Context.Session.Remove("FlashMessage");
+    }
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+
+        <h2 class="fw-bold text-center text-primary mb-4">Welcome to Your Dashboard</h2>
+
+        <p class="text-center text-muted mb-4">
+            Manage your profile, goals and fitness plans.
+        </p>
+
+        <div class="row mt-4">
+
+            <div class="col-md-6 mb-3">
+                <a href="/Profile/Setup" class="text-decoration-none">
+                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
+                        <h4 class="text-primary">Update Your Profile</h4>
+                        <p class="small text-muted">Edit your personal info</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <a href="/Goals/SelectGoal" class="text-decoration-none">
+                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
+                        <h4 class="text-warning">Change Goal</h4>
+                        <p class="small text-muted">Switch between weight loss / gain</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 mb-3">
+                <a href="/Plans/WeightLossWorkout" class="text-decoration-none">
+                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
+                        <h4 class="text-danger">Workout Plan</h4>
+                        <p class="small text-muted">View your workout routine</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <a href="/Plans/WeightLossDiet" class="text-decoration-none">
+                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
+                        <h4 class="text-success">Diet Plan</h4>
+                        <p class="small text-muted">Meal plan for better results</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 mb-3">
+                <a href="/User/ProgressTracker" class="text-decoration-none">
+                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
+                        <h4 class="text-secondary">Progress Tracker</h4>
+                        <p class="small text-muted">Track your weight & workout progress</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <a href="/User/Feedback" class="text-decoration-none">
+                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
+                        <h4 class="text-info">Feedback</h4>
+                        <p class="small text-muted">Give us your thoughts</p>
+                    </div>
+                </a>
+            </div>
+
+            <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="text-center">
+                <button type="submit" class="dashboard-box shadow-sm p-4 rounded logout-box btn btn-danger w-100">
+            <h4 class="text-white">Logout</h4>
+            <p class="small text-light">Exit your account</p>
+             </button>
+         </form>
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+div.dashboard-box {
+    border: 1px solid #cdeac0;
+    background-color: #e6ffe6 !important;
+    transition: 0.2s;
+}
+
+div.dashboard-box h4,
+div.dashboard-box p {
+    color: #000 !important;
+}
+
+
+div.dashboard-box:hover {
+    transform: scale(1.03);
+    background-color: #d9ffd9 !important;
+    cursor: pointer;
+}
+
+
+div.logout-box {
+    background-color: #e6ffe6 !important;
+}
+
+div.logout-box:hover {
+    background-color: #ffe5e5 !important;
+}
+    body {
+        background-image: url('/images/image02.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>

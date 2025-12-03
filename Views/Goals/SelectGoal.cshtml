@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Select Your Goal";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center text-primary fw-bold mb-4">What is your fitness goal?</h2>
+                <p class="text-muted text-center mb-4">
+                    Choose a goal so we can prepare the perfect plan for you.
+                </p>
+
+                <form method="post">
+
+                    <div class="row">
+
+                        <!-- Weight Loss Card -->
+                        <div class="col-md-6 mb-3">
+                            <label class="goal-card w-100">
+                                <input type="radio" name="goal" value="WeightLoss" class="d-none" required />
+                                <div class="border rounded p-4 text-center shadow-sm hover-card">
+                                    <h4 class="fw-bold text-danger">Weight Loss</h4>
+                                    <p class="text-muted small">
+                                        Burn fat to get lean body, improve endurance and build confidence.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Weight Gain Card -->
+                        <div class="col-md-6 mb-3">
+                            <label class="goal-card w-100">
+                                <input type="radio" name="goal" value="WeightGain" class="d-none" required />
+                                <div class="border rounded p-4 text-center shadow-sm hover-card">
+                                    <h4 class="fw-bold text-success">Weight Gain</h4>
+                                    <p class="text-muted small">
+                                        Build muscles, increase your strength & maintain health.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary w-100 fw-semibold mt-4">Continue</button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .goal-card input:checked + div {
+        border: 2px solid #0d6efd !important;
+        background: #e9f2ff;
+    }
+    .hover-card:hover {
+        transform: scale(1.03);
+        transition: 0.2s;
+        cursor: pointer;
+    }
+</style>

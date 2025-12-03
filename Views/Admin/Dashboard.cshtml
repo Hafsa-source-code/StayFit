@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-5">
+    <h1 class="fw-bold text-center mb-4">Admin Dashboard</h1>
+
+    <div class="row g-4 justify-content-center">
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow text-center">
+                <h4 class="fw-bold text-primary">Manage Users</h4>
+                <p>View, edit or remove registered users.</p>
+                <a asp-controller="Admin" asp-action="ManageUsers" class="btn btn-primary w-100">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow text-center">
+                <h4 class="fw-bold text-success">Manage Plans</h4>
+                <p>Add or update workout & diet plans.</p>
+                <a asp-controller="Admin" asp-action="ManagePlans" class="btn btn-success w-100">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow text-center">
+                <h4 class="fw-bold text-warning">View Feedback</h4>
+                <p>See feedback submitted by users.</p>
+                <a asp-controller="Admin" asp-action="ViewFeedback" class="btn btn-warning w-100 text-white">Open</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    .card {
+        transition: 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+</style>

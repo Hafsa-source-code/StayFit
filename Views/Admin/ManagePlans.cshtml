@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Manage Plans";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold mb-4">Manage Workout & Diet Plans</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+            <div class="card p-4 shadow">
+                <h4 class="fw-bold text-primary">Workout Plans</h4>
+                <p>Add, edit, or remove workout routines.</p>
+                <button class="btn btn-primary w-100">Manage Workouts</button>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card p-4 shadow">
+                <h4 class="fw-bold text-success">Diet Plans</h4>
+                <p>Create and manage diet charts.</p>
+                <button class="btn btn-success w-100">Manage Diets</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    .card {
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+</style>

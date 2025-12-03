@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold mb-4">Manage Users</h2>
+
+    <table class="table table-bordered table-striped shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Goal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Ali Khan</td>
+                <td>ali@gmail.com</td>
+                <td>Weight Loss</td>
+                <td>
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>Ayesha Khan</td>
+                <td>ayesha@mail.com</td>
+                <td>Muscle Gain</td>
+                <td>
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    table {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    th, td {
+        vertical-align: middle !important;
+    }
+</style>

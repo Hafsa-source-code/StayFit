@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Weight Loss Plans";
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="fw-bold text-center text-dark mb-3">Weight Loss Plans</h2>
+        <p class="text-center text-muted mb-4">
+            Choose between your workout and diet plan to continue.
+        </p>
+
+        <div class="row mt-3">
+
+            <div class="col-md-6 mb-3">
+                <a href="/Plans/WeightLossWorkout" class="text-decoration-none">
+                    <div class="border rounded p-4 text-center shadow-sm hover-card">
+                        <h4 class="text-primary">Workout Plan</h4>
+                        <p class="small text-muted">Fat burning & cardio routines</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <a href="/Plans/WeightLossDiet" class="text-decoration-none">
+                    <div class="border rounded p-4 text-center shadow-sm hover-card">
+                        <h4 class="text-success">Diet Plan</h4>
+                        <p class="small text-muted">Low-calorie meals for weight loss</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+.card.shadow.p-4 {
+    background-color: #88b2d8; 
+    color: #ffffff;           
+}
+
+.hover-card {
+    background-color: #ffffff; 
+    color: #000000;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    transition: 0.2s;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.hover-card:hover {
+    transform: scale(1.03);
+    background-color: #f1f1f1; 
+    cursor: pointer;
+}
+
+.hover-card h4 {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.hover-card p {
+    color: #6c757d; 
+    font-size: 0.9rem;
+}
+body{
+        background-image: url('/images/image03.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
+</style>

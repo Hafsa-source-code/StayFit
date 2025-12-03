@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero-section position-relative text-center">
+    <img src="/images/image04.png" 
+         class="img-fluid w-250" 
+         style="height: 100vh; object-fit: cover; object-position: center;">
+
+    <div class="position-absolute start-50 translate-middle-x text-dark" style="top: 20%;">
+        <h1 class="display-3 fw-bold">Welcome to StayFit</h1>
+        <p class="lead">Your journey to a healthier lifestyle starts here — anytime, anywhere!</p>
+
+        <!-- Identity Register button -->
+        <a class="btn btn-success btn-lg mt-3 fw-semibold"
+           asp-area="Identity" asp-page="/Account/Register">
+            Get Started
+        </a>
+    </div>
+</div>
+
+<div class="container text-center mt-5">
+    <div class="row g-3 justify-content-center">
+
+        <div class="col-md-3">
+            <div class="p-4 bg-primary rounded text-white shadow feature-box">
+                <h4>Track Goals</h4>
+                <p>Stay committed and focused on your fitness journey.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-4 bg-info rounded text-white shadow feature-box">
+                <h4>Workout Plans</h4>
+                <p>Follow guided routines to achieve your goals.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-4 bg-success rounded text-white shadow feature-box">
+                <h4>Diet Guides</h4>
+                <p>Healthy and affordable meal ideas suitable for you.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .feature-box {
+        transition: 0.3s;
+    }
+    .feature-box:hover {
+        transform: translateY(-8px);
+    }
+    .text-shadow {
+        text-shadow: 0 3px 10px rgba(0,0,0,0.75);
+    }
+</style>
