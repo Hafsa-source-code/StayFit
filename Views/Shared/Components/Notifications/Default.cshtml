@@ -1,0 +1,11 @@
+@model List<string>
+
+<div class="alert alert-info">
+    <h5>Notifications</h5>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@item</li>
+        }
+    </ul>
+</div>

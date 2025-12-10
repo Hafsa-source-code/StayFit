@@ -23,7 +23,7 @@ namespace StayFit.Controllers
             {
                 Expires = DateTime.Now.AddDays(30),
                 HttpOnly = true,
-                Secure = true,      
+                Secure = false,      
                 SameSite = SameSiteMode.Strict
             };
 

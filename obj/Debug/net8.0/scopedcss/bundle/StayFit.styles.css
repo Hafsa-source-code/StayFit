@@ -1,49 +1,51 @@
 /* _content/StayFit/Views/Shared/_Layout.cshtml.rz.scp.css */
-/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand[b-usk5w069ij] {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+/* ------------------------------------
+   Navbar
+------------------------------------ */
+.navbar-custom[b-usk5w069ij] {
+    background-color: #ff4da6; /* soft pink */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-a[b-usk5w069ij] {
-  color: #0077cc;
+.navbar-custom .nav-link[b-usk5w069ij] {
+    color: white !important;
+    font-weight: 600;
 }
 
-.btn-primary[b-usk5w069ij] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.navbar-custom .nav-link:hover[b-usk5w069ij] {
+    color: #ffe6f2 !important;
 }
 
-.nav-pills .nav-link.active[b-usk5w069ij], .nav-pills .show > .nav-link[b-usk5w069ij] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.navbar-logo[b-usk5w069ij] {
+    height: 30px; /* smaller logo */
+    width: auto;  /* maintain aspect ratio */
 }
 
-.border-top[b-usk5w069ij] {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom[b-usk5w069ij] {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow[b-usk5w069ij] {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy[b-usk5w069ij] {
-  font-size: 1rem;
-  line-height: inherit;
+/* ------------------------------------
+   Footer
+------------------------------------ */
+footer[b-usk5w069ij], .footer[b-usk5w069ij] {
+    background-color: #000 !important;
+    color: white !important;
+    padding: 25px 0;
+    text-align: center;
+    width: 100%;
+    position: relative;
 }
 
-.footer[b-usk5w069ij] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+footer a[b-usk5w069ij] {
+    color: white !important;
+}
+
+/* Extra spacing between boxes and footer */
+.page-bottom-space[b-usk5w069ij] {
+    height: 80px;
+}
+
+/* ------------------------------------
+   Responsive
+------------------------------------ */
+@media (max-width: 767px) {
+    .navbar .nav-link[b-usk5w069ij] { font-size: 14px; }
+    .navbar-logo[b-usk5w069ij] { height: 30px; }
 }

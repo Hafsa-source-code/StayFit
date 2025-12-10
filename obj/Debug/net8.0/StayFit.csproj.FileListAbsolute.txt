@@ -20,9 +20,7 @@
 /Users/hafsa/StayFit/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.StayFit.props
 /Users/hafsa/StayFit/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.StayFit.props
 /Users/hafsa/StayFit/obj/Debug/net8.0/staticwebassets.pack.json
-/Users/hafsa/StayFit/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /Users/hafsa/StayFit/obj/Debug/net8.0/scopedcss/bundle/StayFit.styles.css
-/Users/hafsa/StayFit/obj/Debug/net8.0/scopedcss/projectbundle/StayFit.bundle.scp.css
 /Users/hafsa/StayFit/obj/Debug/net8.0/StayFit.dll
 /Users/hafsa/StayFit/obj/Debug/net8.0/refint/StayFit.dll
 /Users/hafsa/StayFit/obj/Debug/net8.0/StayFit.pdb
@@ -274,3 +272,4 @@
 /Users/hafsa/StayFit/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll
 /Users/hafsa/StayFit/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll
 /Users/hafsa/StayFit/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll
+/Users/hafsa/StayFit/obj/Debug/net8.0/StayFit.sourcelink.json

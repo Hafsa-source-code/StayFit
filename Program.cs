@@ -4,7 +4,11 @@ using StayFit.Data;
 using StayFit.Models;
 using StayFit.Models.Interfaces;
 using StayFit.Models.Repositories;
+using Microsoft.AspNetCore.SignalR;
+using StayFit.Hubs;
+using StayFit.Hubs.NotificationHub;
 using System.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -41,7 +45,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login";
 });
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Middleware
@@ -55,6 +59,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.MapHub<StayFit.Hubs.NotificationHub>("/notificationsHub");
 
 app.UseAuthentication();
 app.UseAuthorization();
