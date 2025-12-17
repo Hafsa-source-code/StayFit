@@ -260,6 +260,86 @@ namespace StayFit.Migrations
                     b.ToTable("ContactMessages");
                 });
 
+            modelBuilder.Entity("StayFit.Models.Domain.DietPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoalType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Meal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DietPlans");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Eggs + Peanut Butter Toast",
+                            GoalType = "WeightGain",
+                            Meal = "Breakfast"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Chicken Wrap / Rice Bowl",
+                            GoalType = "WeightGain",
+                            Meal = "Lunch"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Protein Shake",
+                            GoalType = "WeightGain",
+                            Meal = "Snack"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Pasta / Potatoes / Avocado",
+                            GoalType = "WeightGain",
+                            Meal = "Dinner"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Oatmeal + Fruits",
+                            GoalType = "WeightLoss",
+                            Meal = "Breakfast"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Green Salad + Grilled Chicken",
+                            GoalType = "WeightLoss",
+                            Meal = "Lunch"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Vegetable Soup",
+                            GoalType = "WeightLoss",
+                            Meal = "Dinner"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Apple / Nuts",
+                            GoalType = "WeightLoss",
+                            Meal = "Snacks"
+                        });
+                });
+
             modelBuilder.Entity("StayFit.Models.Domain.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -275,9 +355,11 @@ namespace StayFit.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -293,7 +375,7 @@ namespace StayFit.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("GoalType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -356,7 +438,13 @@ namespace StayFit.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoalType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Height")
@@ -387,9 +475,70 @@ namespace StayFit.Migrations
                     b.Property<string>("Level")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Week")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Workouts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Bench Press – 4 sets",
+                            Level = "WeightGain",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Deadlift – 3 sets",
+                            Level = "WeightGain",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Squats – 4 sets",
+                            Level = "WeightGain",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Biceps + Triceps",
+                            Level = "WeightGain",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Jogging – 30 minutes",
+                            Level = "WeightLoss",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "HIIT – 20 minutes",
+                            Level = "WeightLoss",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Cycling – 40 minutes",
+                            Level = "WeightLoss",
+                            Week = "General"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Yoga + Stretching – 15 minutes",
+                            Level = "WeightLoss",
+                            Week = "General"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -441,6 +590,15 @@ namespace StayFit.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StayFit.Models.Domain.Feedback", b =>
+                {
+                    b.HasOne("StayFit.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

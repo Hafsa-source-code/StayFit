@@ -1,3 +1,5 @@
+@model IEnumerable<dynamic>
+
 @{
     ViewData["Title"] = "View Feedback";
 }
@@ -9,6 +11,7 @@
         <thead class="table-warning">
             <tr>
                 <th>Feedback ID</th>
+                <th>User Name</th>
                 <th>User Email</th>
                 <th>Message</th>
                 <th>Date</th>
@@ -16,23 +19,29 @@
         </thead>
 
         <tbody>
-           
-            <tr>
-                <td>1</td>
-                <td>ali@gmail.com</td>
-                <td>Loved the workout plans!</td>
-                <td>12 Nov 2025</td>
-            </tr>
-
-            <tr>
-                <td>2</td>
-                <td>sana@hotmail.com</td>
-                <td>App is great, diet plan helped a lot.</td>
-                <td>14 Nov 2025</td>
-            </tr>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var fb in Model)
+                {
+                    <tr>
+                        <td>@fb.Id</td>
+                        <td>@(fb.UserFullName ?? "Unknown")</td>
+                        <td>@fb.UserEmail </td>
+                        <td>@fb.Message</td>
+                        <td>@fb.Date.ToString("dd MMM yyyy HH:mm")</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No feedback available.</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
+
 <style>
     table {
         border-radius: 8px;

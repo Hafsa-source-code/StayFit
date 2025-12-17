@@ -10,35 +10,51 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - StayFit</title>
+
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-
     <link rel="stylesheet" href="~/css/site.css?v=@DateTime.Now.Ticks" />
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body class="d-flex flex-column min-vh-100 @theme">
 
-    <!-- Navbar -->
+    <!-- ================= MAIN NAVBAR ================= -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-custom mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand d-flex align-items-center"
+                   asp-controller="Home" asp-action="Index">
                     <img src="~/images/StayFit.png" alt="StayFit Logo" class="navbar-logo">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-lg-center">
+
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Sign Up</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="About" asp-action="About">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Contact" asp-action="Contact">Contact</a></li>
-                         <li class="nav-item ms-3">
-                        <button id="toggleThemeBtn" class="btn btn-sm btn-light">Toggle Theme</button>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item position-relative ms-3">
+                                <a class="nav-link" href="#">
+                                    🔔 Notifications
+                                    <span id="notifCount"
+                                          class="badge bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="nav-item ms-3">
+                            <button id="toggleThemeBtn" class="btn btn-sm btn-light">Toggle Theme</button>
                         </li>
                     </ul>
                 </div>
@@ -46,49 +62,47 @@
         </nav>
     </header>
 
-    @if(!string.IsNullOrEmpty(flashMessage))
+    <!-- ================= FLASH MESSAGE ================= -->
+    @if (!string.IsNullOrEmpty(flashMessage))
     {
         <div class="container mt-2">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 @flashMessage
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         </div>
     }
 
-    <main class="flex-grow-1">
+    <!-- ================= PAGE CONTENT (REQUIRED) ================= -->
+    <main class="container flex-grow-1">
         @RenderBody()
     </main>
 
+    <!-- ================= FOOTER ================= -->
     <footer class="footer mt-auto">
         <div class="container">
-            &copy; 2025 - StayHealthy - StayFit - 
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - StayHealthy - StayFit -
+            <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- ================= SCRIPTS ================= -->
     <script src="~/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $("#toggleThemeBtn").click(function () {
+                let currentTheme = $("body").hasClass("DarkMode") ? "DarkMode" : "LightMode";
+                let newTheme = currentTheme === "DarkMode" ? "LightMode" : "DarkMode";
 
-@* jquery  *@
-
-   <script>
-    $(document).ready(function () {
-        $("#toggleThemeBtn").click(function () {
-            let currentTheme = $("body").hasClass("DarkMode") ? "DarkMode" : "LightMode";
-            let newTheme = currentTheme === "DarkMode" ? "LightMode" : "DarkMode";
-
-            $.post("/Home/SetTheme", { theme: newTheme })
-                .done(function () {
-                    $("body").removeClass(currentTheme).addClass(newTheme);
-                });
+                $.post("/Home/SetTheme", { theme: newTheme })
+                    .done(function () {
+                        $("body").removeClass(currentTheme).addClass(newTheme);
+                    });
+            });
         });
-    });
-</script>
-<div class="col-md-3">
-    @await Component.InvokeAsync("Notifications")
-</div>
-@await RenderSectionAsync("Scripts", required: false)
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,28 @@
+<div class="card shadow p-4 mx-auto" style="max-width:600px;">
+    <h2 class="text-center fw-bold text-success mb-4">@ViewBag.PlanType</h2>
+
+    <form id="planForm">
+        <button type="button" class="btn btn-success w-100 mb-2" data-plan="Workout">Workout</button>
+        <button type="button" class="btn btn-success w-100 mb-2" data-plan="Diet">Diet</button>
+    </form>
+
+    <div id="planMessage" class="mt-3 text-center fw-bold"></div>
+</div>
+
+<script>
+$("#planForm button").click(function() {
+    var planType = $(this).data("plan");
+
+    $.ajax({
+        url: '@Url.Action("SelectPlan","Plans")',
+        type: 'POST',
+        data: { planType: planType },
+        success: function(res){
+            window.location.href = res.redirectUrl; // go to dashboard
+        },
+        error: function(){
+            $("#planMessage").text("Something went wrong").addClass("text-danger");
+        }
+    });
+});
+</script>

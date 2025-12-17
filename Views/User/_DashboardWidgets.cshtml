@@ -1,0 +1,31 @@
+@model StayFit.Models.ViewModels.DashboardPlanWidgetVM
+
+<div class="row g-4 mt-3">
+
+    <!-- Diet Widget -->
+    <div class="col-md-6">
+        <div class="card shadow p-4 h-100">
+            <h5 class="fw-bold text-success mb-3">🥗 Your Diet Today</h5>
+            <ul class="list-group list-group-flush fw-semibold">
+                @foreach (var diet in Model.DietPlans)
+                {
+                    <li class="list-group-item">@diet.Meal: @diet.Description</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- Workout Widget -->
+    <div class="col-md-6">
+        <div class="card shadow p-4 h-100">
+            <h5 class="fw-bold text-primary mb-3">🏋️ Today's Workout</h5>
+            <ul class="list-group list-group-flush fw-semibold">
+                @foreach (var workout in Model.Workouts)
+                {
+                    <li class="list-group-item">@workout.Description</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+</div>

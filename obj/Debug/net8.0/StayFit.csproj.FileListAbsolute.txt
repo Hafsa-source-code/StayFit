@@ -273,3 +273,7 @@
 /Users/hafsa/StayFit/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll
 /Users/hafsa/StayFit/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll
 /Users/hafsa/StayFit/obj/Debug/net8.0/StayFit.sourcelink.json
+/Users/hafsa/StayFit/bin/Debug/net8.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/Users/hafsa/StayFit/bin/Debug/net8.0/Microsoft.Extensions.Hosting.Abstractions.dll
+/Users/hafsa/StayFit/bin/Debug/net8.0/Microsoft.Extensions.ObjectPool.dll
+/Users/hafsa/StayFit/bin/Debug/net8.0/System.Net.WebSockets.WebSocketProtocol.dll

@@ -1,0 +1,44 @@
+<div class="mt-4">
+
+    @await Html.PartialAsync("_WeightGainDiet",ViewData["DietPlans"] )
+
+    <hr class="my-4"/>
+
+    @await Html.PartialAsync("_WeightGainWorkout",ViewData["Workouts"])
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-secondary" id="backBtn">Back</button>
+        <button class="btn btn-primary" id="savePlanBtn">Save Plan</button>
+    </div>
+
+    <div id="planMessage" class="text-center fw-bold mt-2"></div>
+</div>
+<script>
+$(function() {
+
+    $("#savePlanBtn").click(function () {
+    const goalType = "@ViewData["GoalType"]"; // "WeightGain" or "WeightLoss"
+
+    $.ajax({
+        url: "/Plans/SaveUserPlan",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ PlanType: goalType }), // wrap in object
+        success: function () {
+            $("#planMessage")
+                .text("Plan saved successfully!")
+                .addClass("text-success");
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            $("#planMessage")
+                .text("Error saving plan")
+                .addClass("text-danger");
+        }
+    });
+});
+
+
+});
+</script>

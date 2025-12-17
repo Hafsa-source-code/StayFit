@@ -1,25 +1,57 @@
+using StayFit.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StayFit.Data;
+using StayFit.Models.Domain;
 
 namespace StayFit.Controllers
 {
     public class GoalsController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public GoalsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+
+        // ✅ AJAX PARTIAL LOAD
         [HttpGet]
-        public IActionResult SelectGoal()
+        public async Task<IActionResult> SelectGoalPartial()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var profile = _context.UserProfiles
+                .FirstOrDefault(p => p.UserId == user.Id);
+            string currentGoal = profile?.GoalType ?? "";
+            return PartialView("_SelectGoal", currentGoal);
         }
 
+        // ✅ SAVE GOAL VIA AJAX
         [HttpPost]
-        public IActionResult SelectGoal(string goal)
+        public async Task<IActionResult> SaveGoal([FromBody] GoalInputModel model)
         {
-            if (goal == "WeightLoss")
-                return RedirectToAction("WeightLossPlans", "Plans");
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
 
-            if (goal == "WeightGain")
-                return RedirectToAction("WeightGainPlans", "Plans");
+            var profile = _context.UserProfiles
+                .FirstOrDefault(p => p.UserId == user.Id);
 
-            return View();
+            if (profile == null)
+                return BadRequest("Profile not found");
+
+            profile.GoalType = model.Goal;
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
         }
+    }
+
+    public class GoalInputModel
+    {
+        public string Goal { get; set; }
     }
 }

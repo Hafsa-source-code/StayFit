@@ -1,3 +1,4 @@
+using System;
 namespace StayFit.Models.Domain
 {
     public class Feedback
@@ -6,5 +7,7 @@ namespace StayFit.Models.Domain
         public string ? UserId { get; set; }
         public string ? Message { get; set; }
         public DateTime Date { get; set; }
+
+        public virtual ApplicationUser ? User { get; set; }
     }
 }

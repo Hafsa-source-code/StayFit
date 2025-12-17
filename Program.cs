@@ -4,16 +4,19 @@ using StayFit.Data;
 using StayFit.Models;
 using StayFit.Models.Interfaces;
 using StayFit.Models.Repositories;
-using Microsoft.AspNetCore.SignalR;
 using StayFit.Hubs;
-using StayFit.Hubs.NotificationHub;
-using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// -------------------- SERVICES --------------------
+
+// MVC
 builder.Services.AddControllersWithViews();
 
-// Enable Session
+// SignalR
+builder.Services.AddSignalR();
+
+// Session
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -24,7 +27,23 @@ builder.Services.AddSession(options =>
 // Needed for session in views
 builder.Services.AddHttpContextAccessor();
 
-// Register repositories
+// Database
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();
+
+// Login path
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+});
+
+// Repositories
 builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
@@ -32,23 +51,10 @@ builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
-// DB + Identity
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders()
-    .AddDefaultUI();
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/Identity/Account/Login";
-});
-builder.Services.AddSignalR();
 var app = builder.Build();
 
-// Middleware
+// -------------------- MIDDLEWARE --------------------
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -59,17 +65,26 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.MapHub<StayFit.Hubs.NotificationHub>("/notificationsHub");
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession(); // ⬅ REQUIRED
 
+app.UseSession();
+
+// -------------------- ENDPOINTS --------------------
+
+// SignalR Hub
+app.MapHub<NotificationHub>("/notificationsHub");
+
+// MVC Routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+
+// -------------------- SEED ADMIN USER --------------------
+
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -78,13 +93,13 @@ using (var scope = app.Services.CreateScope())
     string adminEmail = "admin@stayfit.com";
     string adminPassword = "Admin123!";
 
-    // 1. Ensure Admin role exists
+    // Ensure Admin role
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
 
-    // 2. Ensure admin user exists
+    // Ensure Admin user
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {
@@ -98,10 +113,13 @@ using (var scope = app.Services.CreateScope())
         await userManager.CreateAsync(adminUser, adminPassword);
     }
 
-    // 3. Assign role
+    // Assign Admin role
     if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
     {
         await userManager.AddToRoleAsync(adminUser, "Admin");
     }
 }
+
 app.Run();
+
+

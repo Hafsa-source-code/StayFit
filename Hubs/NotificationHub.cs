@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.SignalR;
 
-public class NotificationHub : Hub
+namespace StayFit.Hubs
 {
+    public class NotificationHub : Hub
+    {
+    }
 }

@@ -210,8 +210,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29udGFjdC9Db250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Goals/SelectGoal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR29hbHMvU2VsZWN0R29hbC5jc2h0bWw=
+[/Users/hafsa/StayFit/Views/Goals/_SelectGoal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR29hbHMvX1NlbGVjdEdvYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/hafsa/StayFit/Views/Home/Index.cshtml]
@@ -222,32 +222,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Plans/WeightGainDiet.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvV2VpZ2h0R2FpbkRpZXQuY3NodG1s
+[/Users/hafsa/StayFit/Views/Plans/_WeightGainBundle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvX1dlaWdodEdhaW5CdW5kbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Plans/WeightGainPlans.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvV2VpZ2h0R2FpblBsYW5zLmNzaHRtbA==
+[/Users/hafsa/StayFit/Views/Plans/_WeightGainDiet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvX1dlaWdodEdhaW5EaWV0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Plans/WeightGainWorkout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvV2VpZ2h0R2FpbldvcmtvdXQuY3NodG1s
+[/Users/hafsa/StayFit/Views/Plans/_WeightGainWorkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvX1dlaWdodEdhaW5Xb3Jrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Plans/WeightLossDiet.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvV2VpZ2h0TG9zc0RpZXQuY3NodG1s
+[/Users/hafsa/StayFit/Views/Plans/_WeightLossBundle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvX1dlaWdodExvc3NCdW5kbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Plans/WeightLossPlans.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvV2VpZ2h0TG9zc1BsYW5zLmNzaHRtbA==
+[/Users/hafsa/StayFit/Views/Plans/_WeightLossDiet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvX1dlaWdodExvc3NEaWV0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/Plans/WeightLossWorkout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvV2VpZ2h0TG9zc1dvcmtvdXQuY3NodG1s
+[/Users/hafsa/StayFit/Views/Plans/_WeightLossWorkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbnMvX1dlaWdodExvc3NXb3Jrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/hafsa/StayFit/Views/Profile/Setup.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9TZXR1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/hafsa/StayFit/Views/Profile/_Setup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9fU2V0dXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/hafsa/StayFit/Views/Shared/Components/Notifications/Default.cshtml]
@@ -274,12 +278,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9EYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/User/Feedback.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9GZWVkYmFjay5jc2h0bWw=
+[/Users/hafsa/StayFit/Views/User/_DashboardWidgets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9fRGFzaGJvYXJkV2lkZ2V0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/hafsa/StayFit/Views/User/ProgressTracker.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9Qcm9ncmVzc1RyYWNrZXIuY3NodG1s
+[/Users/hafsa/StayFit/Views/User/_Feedback.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9fRmVlZGJhY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/hafsa/StayFit/Views/User/_ProgressTracker.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9fUHJvZ3Jlc3NUcmFja2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/hafsa/StayFit/Views/_ViewImports.cshtml]

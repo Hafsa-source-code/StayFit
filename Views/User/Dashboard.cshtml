@@ -1,133 +1,154 @@
 @{
-    ViewData["Title"] = "User Dashboard";
-
-    var lastWeight = Context.Request.Cookies["LastProgressWeight"];
-    var lastDate = Context.Request.Cookies["LastProgressDate"];
+    ViewData["Title"] = "Dashboard";
+    var userName = ViewData["UserName"] as string ?? "User";
 }
 
-@if(!string.IsNullOrEmpty(lastWeight))
-{
-    <div class="alert alert-info">
-        Last recorded weight: @lastWeight kg on @lastDate
-    </div>
-}
-@{
-    var flashMessage = Context.Session.GetString("FlashMessage");
-    if (!string.IsNullOrEmpty(flashMessage))
-    {
-        <div class="alert alert-success">
-            @flashMessage
-        </div>
-        Context.Session.Remove("FlashMessage");
-    }
-}
+<div class="dashboard-container">
 
-<div class="container mt-5">
-    <div class="card shadow p-4">
+    <!-- SIDEBAR -->
+    <aside class="dashboard-sidebar">
+        <h3 class="text-center fw-bold">Dashboard</h3>
 
-        <h2 class="fw-bold text-center text-primary mb-4">Welcome to Your Dashboard</h2>
+        <ul class="sidebar-menu">
 
-        <p class="text-center text-muted mb-4">
-            Manage your profile, goals and fitness plans.
-        </p>
-
-        <div class="row mt-4">
-
-            <div class="col-md-6 mb-3">
-                <a href="/Profile/Setup" class="text-decoration-none">
-                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
-                        <h4 class="text-primary">Update Your Profile</h4>
-                        <p class="small text-muted">Edit your personal info</p>
-                    </div>
+            <!-- HOME -->
+            <li>
+                <a href="#"
+                   class="sidebar-link active"
+                   data-url="/User/PlanWidgetsPartial">
+                    🏠 Home
                 </a>
-            </div>
+            </li>
 
-            <div class="col-md-6 mb-3">
-                <a href="/Goals/SelectGoal" class="text-decoration-none">
-                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
-                        <h4 class="text-warning">Change Goal</h4>
-                        <p class="small text-muted">Switch between weight loss / gain</p>
-                    </div>
+            <!-- PROFILE -->
+            <li>
+                <a href="#"
+                   class="sidebar-link"
+                   data-url="/Profile/SetupPartial">
+                    👤 View Profile
                 </a>
-            </div>
-            <div class="col-md-6 mb-3">
-                <a href="/Plans/WeightLossWorkout" class="text-decoration-none">
-                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
-                        <h4 class="text-danger">Workout Plan</h4>
-                        <p class="small text-muted">View your workout routine</p>
-                    </div>
-                </a>
-            </div>
+            </li>
 
-            <div class="col-md-6 mb-3">
-                <a href="/Plans/WeightLossDiet" class="text-decoration-none">
-                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
-                        <h4 class="text-success">Diet Plan</h4>
-                        <p class="small text-muted">Meal plan for better results</p>
-                    </div>
+            <!-- GOAL -->
+            <li>
+                <a href="#"
+                   class="sidebar-link"
+                   data-url="/Goals/SelectGoalPartial">
+                    🎯 Edit Goal
                 </a>
-            </div>
-            <div class="col-md-6 mb-3">
-                <a href="/User/ProgressTracker" class="text-decoration-none">
-                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
-                        <h4 class="text-secondary">Progress Tracker</h4>
-                        <p class="small text-muted">Track your weight & workout progress</p>
-                    </div>
-                </a>
-            </div>
+            </li>
 
-            <div class="col-md-6 mb-3">
-                <a href="/User/Feedback" class="text-decoration-none">
-                    <div class="dashboard-box shadow-sm p-4 rounded text-center">
-                        <h4 class="text-info">Feedback</h4>
-                        <p class="small text-muted">Give us your thoughts</p>
-                    </div>
+            <!-- PROGRESS -->
+            <li>
+                <a href="#"
+                   class="sidebar-link"
+                   data-url="/User/ProgressTrackerPartial">
+                    📈 Progress Tracker
                 </a>
-            </div>
+            </li>
 
-            <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="text-center">
-                <button type="submit" class="dashboard-box shadow-sm p-4 rounded logout-box btn btn-danger w-100">
-            <h4 class="text-white">Logout</h4>
-            <p class="small text-light">Exit your account</p>
-             </button>
-         </form>
+            <!-- FEEDBACK -->
+            <li>
+                <a href="#"
+                   class="sidebar-link"
+                   data-url="/User/FeedbackPartial">
+                    💬 Feedback
+                </a>
+            </li>
+
+            <!-- LOGOUT -->
+            <li class="mt-4">
+                <form method="post" asp-area="Identity" asp-page="/Account/Logout">
+                    <button class="logout-btn w-100">
+                        🚪 Logout
+                    </button>
+                </form>
+            </li>
+
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <!-- WELCOME -->
+        <div class="dashboard-welcome text-center mb-4">
+            <h2 class="fw-bold">@userName</h2>
+            <p>Welcome to your dashboard 👋</p>
         </div>
 
-    </div>
+        <!-- DYNAMIC CONTENT -->
+        <div id="dashboardContent">
+            <p class="text-center">Loading...</p>
+        </div>
+
+    </main>
 </div>
 
+@section Scripts {
+<script>
+$(function () {
 
-<style>
-div.dashboard-box {
-    border: 1px solid #cdeac0;
-    background-color: #e6ffe6 !important;
-    transition: 0.2s;
-}
+    // Load Home widgets by default
+    loadHomeWidgets();
 
-div.dashboard-box h4,
-div.dashboard-box p {
-    color: #000 !important;
-}
+    // Sidebar navigation
+    $(".sidebar-link").on("click", function (e) {
+        e.preventDefault();
 
+        $(".sidebar-link").removeClass("active");
+        $(this).addClass("active");
 
-div.dashboard-box:hover {
-    transform: scale(1.03);
-    background-color: #d9ffd9 !important;
-    cursor: pointer;
-}
+        const url = $(this).data("url");
+        $("#dashboardContent").html("<p class='text-center'>Loading...</p>");
+        $("#dashboardContent").load(url, function() {
+            bindPartialActions();
+        });
+    });
 
+    // Load home widgets
+    function loadHomeWidgets() {
+        $(".sidebar-link").removeClass("active");
+        $(".sidebar-link[data-url='/User/PlanWidgetsPartial']").addClass("active");
 
-div.logout-box {
-    background-color: #e6ffe6 !important;
-}
-
-div.logout-box:hover {
-    background-color: #ffe5e5 !important;
-}
-    body {
-        background-image: url('/images/image02.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        $("#dashboardContent").html("<p class='text-center'>Loading...</p>");
+        $("#dashboardContent").load("/User/PlanWidgetsPartial", function() {
+            bindPartialActions();
+        });
     }
-</style>
+
+    // Bind actions inside partials
+    function bindPartialActions() {
+        // Profile Save
+        $("#profileForm").off("submit").on("submit", function(e){
+            e.preventDefault();
+            const data = {
+                UserId: $("input[name='UserId']").val(),
+                FullName: $("input[name='FullName']").val(),
+                Age: parseInt($("input[name='Age']").val()),
+                Weight: parseFloat($("input[name='Weight']").val()),
+                Height: parseFloat($("input[name='Height']").val()),
+                Gender: $("select[name='Gender']").val(),
+                GoalType: $("select[name='GoalType']").val()
+            };
+            $.ajax({
+                url:'/Profile/SaveProfile',
+                type:'POST',
+                contentType:'application/json',
+                data: JSON.stringify(data),
+                success:function(res){
+                    if(res.success){
+                        $("#profileMessage").text(res.message).removeClass('text-danger').addClass('text-success');
+                        setTimeout(()=>{ loadHomeWidgets(); }, 800);
+                    }
+                },
+                error:function(){
+                    $("#profileMessage").text('Error saving profile').addClass('text-danger');
+                }
+            });
+        });
+    }
+
+});
+</script>
+}

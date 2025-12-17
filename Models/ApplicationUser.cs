@@ -12,3 +12,5 @@ namespace StayFit.Models
     public string? FitnessGoal { get; set; } // WeightLoss / WeightGain
     }
 }
+
+    

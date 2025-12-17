@@ -1,11 +1,7 @@
-@model List<string>
-
 <div class="alert alert-info">
-    <h5>Notifications</h5>
-    <ul>
-        @foreach (var item in Model)
-        {
-            <li>@item</li>
-        }
+    <h5 class="mb-2">Notifications</h5>
+
+    <ul id="notificationList" class="mb-0">
+        <li class="text-muted">No notifications yet</li>
     </ul>
 </div>

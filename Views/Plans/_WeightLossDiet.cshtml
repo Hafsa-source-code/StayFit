@@ -1,0 +1,27 @@
+@model IEnumerable<StayFit.Models.Domain.DietPlan>
+
+<div class="card shadow p-4 mb-4">
+    <h3 class="fw-bold text-success text-center mb-3">
+        🥗 Weight Loss Diet Plan
+    </h3>
+
+    <p class="text-muted text-center mb-3">
+        Low-calorie balanced meal plan
+    </p>
+
+    <ul class="list-group fw-bold">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var meal in Model)
+            {
+                <li class="list-group-item">
+                    @meal.Description (@meal.Meal)
+                </li>
+            }
+        }
+        else
+        {
+            <li class="list-group-item text-muted">No diet plan available.</li>
+        }
+    </ul>
+</div>

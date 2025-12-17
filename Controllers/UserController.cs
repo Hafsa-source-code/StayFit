@@ -1,105 +1,122 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StayFit.Data;
 using StayFit.Models.Domain;
-using StayFit.Models.Interfaces;
-using System.Security.Claims; 
-using System;
+using Microsoft.AspNetCore.Identity;
+using StayFit.Models;
+using StayFit.Models.ViewModels;
 
-namespace StayFit.Controllers
+public class UserController : Controller
 {
-    [Authorize] 
-    public class UserController : Controller
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly ApplicationDbContext _context;
+
+    public UserController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
     {
-        private readonly IProgressRepository _progressRepository;
+        _userManager = userManager;
+        _context = context;
+    }
 
-        public UserController(IProgressRepository progressRepository)
-        {
-            _progressRepository = progressRepository;
-        }
+    public async Task<IActionResult> Dashboard()
+    {
+        var user = await _userManager.GetUserAsync(User);
+    if (user == null) return RedirectToAction("Login", "Account");
 
-        public IActionResult Dashboard()
-        {
-            return View();
-        }
+    var profile = _context.UserProfiles.FirstOrDefault(p => p.UserId == user.Id);
+    string userName = profile?.FullName ?? user.Email; // fallback to email if full name not set
 
-        public IActionResult UpdateProfile()
-        {
-            return View();
-        }
+    ViewData["UserName"] = userName;
+    ViewData["GoalType"] = profile?.GoalType;
 
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UserGoalPartial()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var profile = _context.UserProfiles.FirstOrDefault(p => p.UserId == user.Id);
+        return PartialView("_UserGoalPartial", profile?.GoalType);
+    }
+       [HttpGet]
+    public IActionResult FeedbackPartial()
+    {
+        return PartialView("_Feedback",User); // _Feedback.cshtml
+    }
+
+    // Handle feedback submission via POST
+    [HttpPost]
+public async Task<IActionResult> Feedback(string message)
+{
+    if (string.IsNullOrWhiteSpace(message))
+        return Json(new { success = false, message = "Message cannot be empty." });
+
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null) return Unauthorized();
+
+    var feedback = new Feedback
+    {
+        UserId = user.Id,
+        Message = message,
+        Date = DateTime.UtcNow
+    };
+
+    _context.Feedbacks.Add(feedback);
+    await _context.SaveChangesAsync();
+
+    return Json(new { success = true, message = "Feedback submitted successfully!" });
+}
+
+   [HttpGet]
+public IActionResult ProgressTrackerPartial()
+{
+    return PartialView("_ProgressTracker");
+}
+
+        // POST: Save progress
         [HttpPost]
-        public IActionResult UpdateProfile(string name, int age, float weight)
+        public async Task<IActionResult> ProgressTracker([FromForm] double weeklyWeight)
         {
-            return RedirectToAction("Dashboard");
-        }
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
 
-        public IActionResult ProgressTracker()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult ProgressTracker(float weeklyWeight, string notes)
-        {
-    
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized("User is not authenticated.");
-            }
             var progress = new Progress
             {
-                UserId = userId,
+                UserId = user.Id,
                 Weight = weeklyWeight,
                 Date = DateTime.Now
             };
 
-            _progressRepository.Add(progress);
+            _context.ProgressRecords.Add(progress);
+            await _context.SaveChangesAsync();
 
-            var options = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1),
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict
-            };
-            Response.Cookies.Append("LastProgressWeight", weeklyWeight.ToString(), options);
-            Response.Cookies.Append("LastProgressDate", DateTime.Now.ToString("yyyy-MM-dd"), options);
-            HttpContext.Session.SetString("FlashMessage", "Your progress has been saved successfully!");
-
-            return RedirectToAction("Dashboard");
+            TempData["FlashMessage"] = "Progress saved successfully!";
+            return RedirectToAction("Dashboard"); // or return Json if using AJAX
         }
 
-        public IActionResult Feedback()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Feedback(string message)
-        {
-            HttpContext.Session.SetString("FlashMessage", "Thank you for your feedback!");
-            return RedirectToAction("Dashboard");
-        }
         [HttpGet]
-public JsonResult GetCalorieSuggestion(int age, string gender)
+public async Task<IActionResult> PlanWidgetsPartial()
 {
-    int calories = 0;
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null) return Unauthorized();
 
-    if (gender.ToLower() == "male")
-    {
-        if (age <= 18) calories = 2500;
-        else if (age <= 40) calories = 2700;
-        else calories = 2400;
-    }
-    else if (gender.ToLower() == "female")
-    {
-        if (age <= 18) calories = 2000;
-        else if (age <= 40) calories = 2200;
-        else calories = 2000;
-    }
+    var profile = _context.UserProfiles
+        .FirstOrDefault(p => p.UserId == user.Id);
 
-    return Json(new { calories = calories });
+    if (profile == null || string.IsNullOrEmpty(profile.GoalType))
+        return PartialView("_NoGoalSelected");
+
+    var vm = new DashboardPlanWidgetVM
+    {
+        DietPlans = _context.DietPlans
+            .Where(d => d.GoalType == profile.GoalType)
+            .ToList(),
+
+        Workouts = _context.Workouts
+            .Where(w => w.Level == profile.GoalType)
+            .ToList()
+    };
+
+    return PartialView("_DashboardWidgets", vm);
 }
-    }
-}
+
+        }

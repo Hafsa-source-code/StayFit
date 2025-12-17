@@ -1,0 +1,23 @@
+@model IEnumerable<StayFit.Models.Domain.Workout>
+
+<div class="card shadow p-4 mb-4">
+    <h3 class="fw-bold text-primary text-center mb-3">
+        🏋️ Weight Gain Workout Plan
+    </h3>
+
+    <ul class="list-group fw-bold">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var workout in Model)
+            {
+                <li class="list-group-item">
+                    @workout.Description
+                </li>
+            }
+        }
+        else
+        {
+            <li class="list-group-item text-muted">No workout plan available.</li>
+        }
+    </ul>
+</div>
