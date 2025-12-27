@@ -14,6 +14,16 @@ namespace StayFit.Data
 
         // Registering  all domain models in DbContext
 
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Goal> Goals { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<DietPlan> DietPlans { get; set; }
+        public DbSet<Workout> Workouts { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Progress> ProgressRecords { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,15 +53,7 @@ namespace StayFit.Data
         new Workout { Id = 8, Level = "WeightLoss", Week = "General", Description = "Yoga + Stretching - 15 minutes" }
     );
         }
-        public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<Goal> Goals { get; set; }
-        public DbSet<Plan> Plans { get; set; }
-
-        public DbSet<DietPlan> DietPlans { get; set; }
-        public DbSet<Workout> Workouts { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<Progress> ProgressRecords { get; set; }
-        public DbSet<ContactMessage> ContactMessages { get; set; }
+        
 
 
     }

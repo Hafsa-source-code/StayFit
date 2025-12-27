@@ -18,7 +18,7 @@ namespace StayFit.Controllers
             _context = context;
         }
 
-        // Full-page view for first-time signup profile completion
+        // Full-page for first-time signup profile completion
         [HttpGet]
         public async Task<IActionResult> Setup()
         {
@@ -28,10 +28,8 @@ namespace StayFit.Controllers
             var profile = _context.UserProfiles.FirstOrDefault(p => p.UserId == user.Id)
                           ?? new UserProfile { UserId = user.Id };
 
-            return View("Setup", profile); // full-page view
+            return View("Setup", profile);
         }
-
-        // Partial view for dashboard AJAX
         [HttpGet]
         public async Task<IActionResult> SetupPartial()
         {
@@ -43,8 +41,6 @@ namespace StayFit.Controllers
 
         return PartialView("_Setup", profile);
         }
-
-        // Save profile via AJAX or full-page POST
         [HttpPost]
         public async Task<IActionResult> SaveProfile([FromBody] UserProfile model)
         {

@@ -1,8 +1,6 @@
-/* ------------------------------------
-   Navbar
------------------------------------- */
+
 .navbar-custom {
-    background-color: #92344a; /* soft pink */
+    background-color: #92344a; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
@@ -23,25 +21,24 @@
 }
 
 .hero-section {
-    height: 100%; 
+   height: 100vh; 
     width: 100%;
     position: relative;
     overflow: hidden;
 }
 .hero-section img {
-    width: 110%;
-    height: 110%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    object-position: center;
 }
 
 .hero-content {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #111; /* DARK TEXT */
+    color: #111; 
     padding: 40px 35px;
     border-radius: 12px;
     background-color: #ad6a7c;
@@ -64,8 +61,8 @@
 .hero-content .btn {
     font-weight: 800;
     font-size: 1.5rem;
-    background-color: #92344a;  /* button color */
-    color: #ffffff !important; /* white text */
+    background-color: #92344a;  
+    color: #ffffff !important; 
 }
 .hero-content .btn:hover {
     background-color: #7b2b3d;
@@ -73,31 +70,33 @@
     
 }
 
-/* ------------------------------------
-   Feature Boxes
------------------------------------- */
 .feature-box {
 
-    padding: 55px 40px;
+    padding: 70px 45px;
     border-radius: 14px;
-    min-height: 250px;
-    font-weight: 800;
+    min-height: 280px;
+    font-size: 1.15rem;
     box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+.feature-box h4 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+.feature-box p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
 .feature-box:hover {
     transform: translateY(-8px);
 }
 
-/* Add spacing below feature boxes before footer */
 .page-bottom-space {
     height: 80px;
 }
 
-/* ------------------------------------
-   Footer
------------------------------------- */
+
 footer, .footer {
     background-color: #000 !important;
     color: white !important;
@@ -121,29 +120,35 @@ footer a {
     .feature-box { padding: 35px 15px; min-width: 200px; }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .hero-content h1 { font-size: 2rem; }
     .hero-content p { font-size: 0.9rem; }
-    .feature-box { padding: 25px 10px; min-width: 180px; margin-bottom: 20px; }
+    
+    .about-header h1 {
+        font-size: 2.5rem;
+    }
+    .about-header p {
+        font-size: 1.1rem;
+    }
+
+    .feature-box {
+        padding: 45px 30px;
+        min-height: 240px;
+    }
 }
 .hero-section.position-relative.text-center {
-    height: 70vh; /* Adjusted height for better visibility */
+    height: 70vh; 
 
 }
-
-/* Light mode (default) */
 .LightMode {
     background-color: #ffffff;
     color: #000000;
 }
 
-/* Dark mode */
 .DarkMode {
     background-color: #121212;
     color: #ffffff;
 }
-
-/* Example fixes for navbar & footer */
 .DarkMode .navbar-custom {
     background-color:  #7b2337; /* darker pink */
 }
@@ -152,13 +157,10 @@ footer a {
     background-color: #000;
 }
 
-/* Dashboard layout */
 .dashboard-container {
     display: flex;
     min-height: 100vh;
 }
-
-/* Sidebar */
 .dashboard-sidebar {
     width: 220px;
     background-color: #92344a; /* darker shade */
@@ -217,19 +219,40 @@ footer a {
 
 /* Main content */
 .dashboard-main {
-    margin-left: 220px; /* same as sidebar width */
+    margin-left: 220px; 
     flex: 1;
     padding: 30px;
     background-color: #f8f9fa;
 }
 
 /* Welcome section */
-.dashboard-welcome h2 {
+.dashboard-welcome h1 {
     color: #92344a;
 }
 
 .dashboard-welcome p {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #555;
+}
+
+.admin-card {
+    padding: 40px 30px;
+    border-radius: 16px;
+    min-height: 260px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(8, 8, 8, 0.18);
+}
+
+.admin-card h3 {
+    font-size: 1.6rem;
+}
+
+.admin-card p {
+    color: #2b2929;
 }
 

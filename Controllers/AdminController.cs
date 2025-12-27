@@ -2,18 +2,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StayFit.Data;
+using System;
 using StayFit.Models.Domain;
+using Microsoft.AspNetCore.SignalR;
+using StayFit.Hubs;
 
 namespace StayFit.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminOnly")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+          private readonly IHubContext<NotificationHub> _hubContext;
 
-        public AdminController(ApplicationDbContext context)
+     public AdminController(ApplicationDbContext context, IHubContext<NotificationHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         public IActionResult Dashboard()
@@ -50,5 +55,25 @@ namespace StayFit.Controllers
 
             return View(feedbacks);
         }
+        [HttpPost]
+    public async Task<IActionResult> SendAnnouncement(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return Json(new { success = false });
+
+        var announcement = new Announcement
+        {
+            Message = message,
+            DateCreated = DateTime.UtcNow
+        };
+        _context.Announcements.Add(announcement);
+        await _context.SaveChangesAsync();
+
+        // Send to all connected users
+        await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
+
+        return Json(new { success = true });
+    }
+
     }
 }

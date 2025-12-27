@@ -5,62 +5,61 @@
 
 <div class="dashboard-container">
 
-    <!-- SIDEBAR -->
     <aside class="dashboard-sidebar">
         <h3 class="text-center fw-bold">Dashboard</h3>
 
         <ul class="sidebar-menu">
 
-            <!-- HOME -->
             <li>
                 <a href="#"
                    class="sidebar-link active"
                    data-url="/User/PlanWidgetsPartial">
-                    🏠 Home
+                    <b>🏠 Home</b>
                 </a>
             </li>
-
-            <!-- PROFILE -->
             <li>
                 <a href="#"
                    class="sidebar-link"
                    data-url="/Profile/SetupPartial">
-                    👤 View Profile
+                   <b> 👤 View Profile </b>
                 </a>
             </li>
-
-            <!-- GOAL -->
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>
+                    <a href="#" class="sidebar-link" data-url="/User/NotificationsPartial">
+                    🔔 Notifications
+                    <span id="sidebarNotifCount" class="badge bg-danger">0</span>
+                </a>
+                </li>
+            }
             <li>
                 <a href="#"
                    class="sidebar-link"
                    data-url="/Goals/SelectGoalPartial">
-                    🎯 Edit Goal
+                   <b> 🎯 Edit Goal</b>
                 </a>
             </li>
-
-            <!-- PROGRESS -->
             <li>
                 <a href="#"
                    class="sidebar-link"
                    data-url="/User/ProgressTrackerPartial">
-                    📈 Progress Tracker
+                    <b> 📈 Progress Tracker</b>
                 </a>
             </li>
 
-            <!-- FEEDBACK -->
             <li>
                 <a href="#"
                    class="sidebar-link"
                    data-url="/User/FeedbackPartial">
-                    💬 Feedback
+                    <b>💬 Feedback</b>
                 </a>
             </li>
 
-            <!-- LOGOUT -->
             <li class="mt-4">
                 <form method="post" asp-area="Identity" asp-page="/Account/Logout">
                     <button class="logout-btn w-100">
-                        🚪 Logout
+                      <b>  🚪 Logout </b>
                     </button>
                 </form>
             </li>
@@ -73,8 +72,8 @@
 
         <!-- WELCOME -->
         <div class="dashboard-welcome text-center mb-4">
-            <h2 class="fw-bold">@userName</h2>
-            <p>Welcome to your dashboard 👋</p>
+            <h1 class="fw-bold">@userName</h1>
+            <p><b>Welcome to your dashboard 👋</b></p>
         </div>
 
         <!-- DYNAMIC CONTENT -->
@@ -84,10 +83,18 @@
 
     </main>
 </div>
-
 @section Scripts {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.0/signalr.min.js"></script>
 <script>
 $(function () {
+
+    // Load existing notifications
+    $.get("/User/NotificationsPartial", function(html){
+        $("#notificationList").html(html);
+        $("#sidebarNotifCount").text($("#notificationList li").length);
+    });
+
+    loadNotificationCount();
 
     // Load Home widgets by default
     loadHomeWidgets();
@@ -114,6 +121,13 @@ $(function () {
         $("#dashboardContent").html("<p class='text-center'>Loading...</p>");
         $("#dashboardContent").load("/User/PlanWidgetsPartial", function() {
             bindPartialActions();
+        });
+    }
+
+    // Load notification count (optional, from DB)
+    function loadNotificationCount() {
+        $.get("/User/GetNotificationCount", function (count) {
+            $("#sidebarNotifCount").text(count);
         });
     }
 
@@ -148,6 +162,24 @@ $(function () {
             });
         });
     }
+
+    // ---------------- SignalR Notifications ----------------
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/notificationsHub")
+        .withAutomaticReconnect()
+        .build();
+
+    connection.on("ReceiveNotification", function(message) {
+        // Add new notification to list
+        const li = $("<li>").addClass("list-group-item").text(message);
+        $("#notificationList").prepend(li);
+
+        // Increment count
+        let count = parseInt($("#sidebarNotifCount").text()) || 0;
+        $("#sidebarNotifCount").text(count + 1);
+    });
+
+    connection.start().catch(err => console.error(err.toString()));
 
 });
 </script>

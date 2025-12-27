@@ -1,3 +1,9 @@
+<div id="progressWidgets"></div>
+<script>
+$(function () {
+    $("#progressWidgets").load("/User/ProgressSummaryPartial");
+});
+</script>
 <div class="d-flex justify-content-center my-5">
     <div class="card shadow p-4 progress-tracker-card" style="max-width:600px; width:100%;">
         <h2 class="fw-bold text-center text-success mb-3">
@@ -5,7 +11,7 @@
         </h2>
 
         <p class="text-center text-muted mb-4">
-            Log your weekly progress to stay motivated!
+            <b>Log your weekly progress to stay motivated!</b>
         </p>
 
         <!-- Gender & Age -->

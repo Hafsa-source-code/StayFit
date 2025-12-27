@@ -3,42 +3,88 @@
 }
 
 <div class="container mt-5">
-    <h1 class="fw-bold text-center mb-4">Admin Dashboard</h1>
+
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">Welcome,StayFit Admin 👋</h1>
+
+        <button id="showAnnouncementBtn" class="btn btn-danger btn-lg mt-3">
+            📢 Send Announcement
+        </button>
+    </div>
+    <div id="announcementForm" class="card shadow p-4 mb-5 mx-auto" style="max-width:600px; display:none;">
+        <h4 class="fw-bold text-info">📢 Send Announcement</h4>
+        <textarea id="announcementMessage" class="form-control mb-2" rows="3" placeholder="Enter message"></textarea>
+        <button id="sendAnnouncementBtn" class="btn btn-info w-100 text-white">Send</button>
+    </div>
 
     <div class="row g-4 justify-content-center">
 
-        <div class="col-md-3">
-            <div class="card p-4 shadow text-center">
-                <h4 class="fw-bold text-primary">Manage Users</h4>
-                <p>View, edit or remove registered users.</p>
-                <a asp-controller="Admin" asp-action="ManageUsers" class="btn btn-primary w-100">Open</a>
+        <div class="col-md-4">
+            <div class="admin-card shadow text-center p-4 h-100">
+                <h3 class="fw-bold text-primary mb-3">Manage Users</h3>
+                <p class="fs-5 mb-4"><b>View or edit any of the registered users.</b></p>
+                <a asp-controller="Admin" asp-action="ManageUsers" class="btn btn-primary btn-lg w-100">Open</a>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card p-4 shadow text-center">
-                <h4 class="fw-bold text-success">Manage Plans</h4>
-                <p>Add or update workout & diet plans.</p>
-                <a asp-controller="Admin" asp-action="ManagePlans" class="btn btn-success w-100">Open</a>
+        <div class="col-md-4">
+            <div class="admin-card shadow text-center p-4 h-100">
+                <h3 class="fw-bold text-success mb-3">Manage Plans</h3>
+                <p class="fs-5 mb-4"><b>Add or update any workout and diet plans.</b></p>
+                <a asp-controller="Admin" asp-action="ManagePlans" class="btn btn-success btn-lg w-100">Open</a>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card p-4 shadow text-center">
-                <h4 class="fw-bold text-warning">View Feedback</h4>
-                <p>See feedback submitted by users.</p>
-                <a asp-controller="Admin" asp-action="ViewFeedback" class="btn btn-warning w-100 text-white">Open</a>
+        <div class="col-md-4">
+            <div class="admin-card shadow text-center p-4 h-100">
+                <h3 class="fw-bold text-warning mb-3">View Feedback</h3>
+                <p class="fs-5 mb-4"><b>Check out all feedbacks submitted by users.</b></p>
+                <a asp-controller="Admin" asp-action="ViewFeedback" class="btn btn-warning btn-lg w-100 text-white">Open</a>
             </div>
         </div>
 
     </div>
 </div>
-<style>
-    .card {
-        transition: 0.3s;
-    }
-    .card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-</style>
+
+@section Scripts {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.0/signalr.min.js"></script>
+<script>
+$(function() {
+
+    // Toggle announcement form
+    $("#showAnnouncementBtn").click(function() {
+        $("#announcementForm").slideToggle();
+    });
+
+    // Connect to SignalR hub
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/notificationsHub")
+        .withAutomaticReconnect()
+        .build();
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    // Send announcement
+    $("#sendAnnouncementBtn").click(function() {
+        const message = $("#announcementMessage").val().trim();
+        if (!message) {
+            alert("Please enter a message");
+            return;
+        }
+
+        $.post("/Admin/SendAnnouncement", { message: message })
+            .done(function(res) {
+                if (res.success) {
+                    $("#announcementMessage").val("");
+                    alert("Announcement sent!");
+                } else {
+                    alert("Failed to send announcement");
+                }
+            })
+            .fail(function() {
+                alert("Error sending announcement");
+            });
+    });
+});
+</script>
+}

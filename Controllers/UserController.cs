@@ -119,4 +119,42 @@ public async Task<IActionResult> PlanWidgetsPartial()
     return PartialView("_DashboardWidgets", vm);
 }
 
+    [HttpGet]
+public async Task<IActionResult> GetNotificationCount()
+{
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null) return Unauthorized();
+
+    // TEMP: hardcoded value
+    // Later replace with database count
+    int count = 3;
+
+    return Json(count);
+}
+[HttpGet]
+public IActionResult NotificationsPartial()
+{
+    var notifications = _context.Announcements
+        .OrderByDescending(a => a.DateCreated)
+        .Take(20) // last 20 notifications
+        .ToList();
+
+    return PartialView("_Notification", notifications);
+}
+[HttpGet]
+public IActionResult GetCalorieSuggestion(int age, string gender)
+{
+    if (age <= 0 || string.IsNullOrEmpty(gender))
+        return Json(new { calories = 0 });
+    double calories;
+    if (gender.ToLower() == "male")
+        calories = 10 * 70 + 6.25 * 170 - 5 * age + 5; 
+    else
+        calories = 10 * 60 + 6.25 * 160 - 5 * age - 161; 
+
+    return Json(new { calories = Math.Round(calories) });
+}
+
+
+
         }

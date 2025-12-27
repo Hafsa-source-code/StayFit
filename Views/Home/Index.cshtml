@@ -2,37 +2,17 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="hero-section position-relative text-center">
-    <img src="/images/image04.png" alt="Hero Image" class="img-fluid hero-image">
+<div class="hero-section position-relative">
+    <img src="/images/image04.png" alt="Hero Image" class="hero-image">
 
-    <div class="hero-content">
-        <h1>Welcome to StayFit</h1>
+    <!-- Center Content -->
+    <div class="hero-content text-center text-white">
+        <h1 class="fw-bold">Welcome to StayFit</h1>
         <p>Your journey to a healthier lifestyle starts here — anytime, anywhere!</p>
-        <a class="btn btn-success btn-lg mt-3" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
+        <a class="btn btn-success btn-lg mt-3"
+           asp-area="Identity"
+           asp-page="/Account/Register">
+            Get Started
+        </a>
     </div>
 </div>
-
-<div class="container text-center mt-5">
-    <div class="row g-5 justify-content-center"> <!-- increased gutter g-5 -->
-        <div class="col-md-4 col-lg-3">
-            <div class="bg-secondary bg info text-white shadow feature-box">
-                <h4>Track Goals</h4>
-                <p>Stay committed and focused on your fitness journey.</p>
-            </div>
-        </div>
-        <div class="col-md-4 col-lg-3">
-            <div class="bg-warning text-white shadow feature-box">
-                <h4>Workout Plans</h4>
-                <p>Follow guided routines to achieve your goals.</p>
-            </div>
-        </div>
-        <div class="col-md-4 col-lg-3">
-            <div class="bg-success bg-info text-white shadow feature-box">
-                <h4>Diet Guides</h4>
-                <p>Healthy and affordable meal ideas suitable for you.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="page-bottom-space"></div>

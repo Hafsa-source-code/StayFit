@@ -1,12 +1,12 @@
 <div class="container mt-5">
     <div class="card shadow p-4">
 
-        <h2 class="fw-bold text-info text-center">
+        <h2 class="fw-bold text-secondary text-center">
             Feedback Form
         </h2>
 
         <p class="text-muted text-center mb-4">
-            Tell us how we can improve your fitness experience!
+            <b>Tell us how we can improve your fitness experience!</b>
         </p>
 
         <form id="feedbackForm">
@@ -15,12 +15,12 @@
 
                 <textarea id="message"
                           class="form-control"
-                          rows="5"
+                          rows="7"
                           required
                           placeholder="Write your feedback here..."></textarea>
             </div>
 
-            <button class="btn btn-info w-100 fw-semibold text-white">
+            <button class="btn btn-warning w-100 fw-semibold text-white">
                 Submit Feedback
             </button>
         </form>
@@ -38,17 +38,26 @@ $("#feedbackForm").submit(function (e) {
         type: "POST",
         data: { message: $("#message").val() },
         success: function (res) {
+
             $("#feedbackMsg")
                 .text(res.message)
                 .removeClass("text-danger")
-                .addClass("text-success");
+                .addClass("text-success")
+                .show();
 
             $("#message").val("");
+            setTimeout(function () {
+                $("#feedbackMsg").fadeOut(600, function () {
+                    $(this).text("").show(); 
+                });
+            }, 4000);
         },
         error: function () {
             $("#feedbackMsg")
                 .text("Error submitting feedback")
-                .addClass("text-danger");
+                .removeClass("text-success")
+                .addClass("text-danger")
+                .show();
         }
     });
 });

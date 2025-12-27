@@ -15,19 +15,19 @@
                 <input type="text" name="FullName" class="form-control" value="@Model.FullName" required />
             </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Age</label>
-                <input type="number" name="Age" class="form-control" value="@Model.Age" required />
-            </div>
+           <div class="mb-3">
+            <label class="form-label fw-semibold">Age</label>
+            <input type="number" name="Age" class="form-control" value="@Model.Age" min="15" required />
+        </div>
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Weight (kg)</label>
-                <input type="number" step="0.1" name="Weight" class="form-control" value="@Model.Weight" required />
+                <input type="number" step="0.1" name="Weight" placeholder="Enter your Weight" class="form-control" value="@Model.Weight" required />
             </div>
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Height (cm)</label>
-                <input type="number" step="0.1" name="Height" class="form-control" value="@Model.Height" required />
+                <input type="number" step="0.1" name="Height" class="form-control" placeholder="Enter your Height" value="@Model.Height" required />
             </div>
 
             <div class="mb-3"> <label class="form-label fw-semibold">Gender</label>

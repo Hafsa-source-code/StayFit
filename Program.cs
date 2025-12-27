@@ -7,12 +7,13 @@ using StayFit.Models.Repositories;
 using StayFit.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// -------------------- SERVICES --------------------
-
-// MVC
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+});
 // SignalR
 builder.Services.AddSignalR();
 
@@ -24,10 +25,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// Needed for session in views
 builder.Services.AddHttpContextAccessor();
-
-// Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -71,12 +69,8 @@ app.UseAuthorization();
 
 app.UseSession();
 
-// -------------------- ENDPOINTS --------------------
 
-// SignalR Hub
 app.MapHub<NotificationHub>("/notificationsHub");
-
-// MVC Routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -93,13 +87,11 @@ using (var scope = app.Services.CreateScope())
     string adminEmail = "admin@stayfit.com";
     string adminPassword = "Admin123!";
 
-    // Ensure Admin role
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
 
-    // Ensure Admin user
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {
@@ -113,7 +105,6 @@ using (var scope = app.Services.CreateScope())
         await userManager.CreateAsync(adminUser, adminPassword);
     }
 
-    // Assign Admin role
     if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
     {
         await userManager.AddToRoleAsync(adminUser, "Admin");
