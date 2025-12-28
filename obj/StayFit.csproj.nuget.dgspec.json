@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hafsa/StayFit/StayFit.csproj": {}
+    "/Users/hafsa/StayFitSolution/StayFit/StayFit.csproj": {}
   },
   "projects": {
-    "/Users/hafsa/StayFit/StayFit.csproj": {
+    "/Users/hafsa/StayFitSolution/StayFit/StayFit.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hafsa/StayFit/StayFit.csproj",
+        "projectUniqueName": "/Users/hafsa/StayFitSolution/StayFit/StayFit.csproj",
         "projectName": "StayFit",
-        "projectPath": "/Users/hafsa/StayFit/StayFit.csproj",
+        "projectPath": "/Users/hafsa/StayFitSolution/StayFit/StayFit.csproj",
         "packagesPath": "/Users/hafsa/.nuget/packages/",
-        "outputPath": "/Users/hafsa/StayFit/obj/",
+        "outputPath": "/Users/hafsa/StayFitSolution/StayFit/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/hafsa/.nuget/NuGet/NuGet.Config"
@@ -54,10 +54,6 @@
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[8.0.0, )"
-            },
-            "Microsoft.AspNetCore.SignalR": {
-              "target": "Package",
-              "version": "[1.2.0, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",

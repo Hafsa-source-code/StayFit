@@ -26,8 +26,8 @@ namespace StayFit.Models.Repositories
         // Add a new feedback
         public void Add(Feedback feedback)
         {
-            using var db = _context.Database.GetDbConnection();
-            db.Open();
+            var db = _context.Database.GetDbConnection(); // do NOT use 'using' here!
+            // connection is already open by test
             db.Execute(
                 "INSERT INTO Feedbacks (UserId, Message, Date) VALUES (@UserId, @Message, @Date)",
                 new { feedback.UserId, feedback.Message, feedback.Date }

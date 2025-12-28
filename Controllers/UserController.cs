@@ -22,7 +22,7 @@ public class UserController : Controller
     if (user == null) return RedirectToAction("Login", "Account");
 
     var profile = _context.UserProfiles.FirstOrDefault(p => p.UserId == user.Id);
-    string userName = profile?.FullName ?? user.Email; // fallback to email if full name not set
+    string userName = profile?.FullName ?? user.Email; 
 
     ViewData["UserName"] = userName;
     ViewData["GoalType"] = profile?.GoalType;
@@ -43,7 +43,6 @@ public class UserController : Controller
         return PartialView("_Feedback",User); // _Feedback.cshtml
     }
 
-    // Handle feedback submission via POST
     [HttpPost]
 public async Task<IActionResult> Feedback(string message)
 {
@@ -90,7 +89,7 @@ public IActionResult ProgressTrackerPartial()
             await _context.SaveChangesAsync();
 
             TempData["FlashMessage"] = "Progress saved successfully!";
-            return RedirectToAction("Dashboard"); // or return Json if using AJAX
+            return RedirectToAction("Dashboard"); 
         }
 
         [HttpGet]

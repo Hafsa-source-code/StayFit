@@ -26,15 +26,94 @@ namespace StayFit.Controllers
             return View();
         }
 
-        public IActionResult ManageUsers()
+        public async Task<IActionResult> ManageUsers()
         {
+            var users = await (
+                from u in _context.Users
+                join p in _context.UserProfiles
+                    on u.Id equals p.UserId into profileGroup
+                from pg in profileGroup.DefaultIfEmpty()
+                select new
+                {
+                    UserId = u.Id,
+                    Email = u.Email,
+                    FullName = pg != null ? pg.FullName : "N/A",
+                    GoalType = pg != null ? pg.GoalType : "N/A"
+                }
+            ).ToListAsync();
+
+            ViewBag.Users = users;
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound();
 
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManageUsers");
+        }
         public IActionResult ManagePlans()
         {
             return View();
         }
+
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == id)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Email,
+                    Profile = _context.UserProfiles.FirstOrDefault(p => p.UserId == u.Id)
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                return NotFound();
+
+            ViewBag.UserId = user.Id;
+            ViewBag.Email = user.Email;
+            ViewBag.FullName = user.Profile?.FullName;
+            ViewBag.GoalType = user.Profile?.GoalType;
+
+            return View();
+        }
+            [HttpPost]
+        public async Task<IActionResult> EditUser(
+            string id,
+            string email,
+            string fullName,
+            string goalType)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound();
+
+            // Update AspNetUsers
+            user.Email = email;
+            user.UserName = email;
+
+            // Update UserProfile
+            var profile = await _context.UserProfiles
+                .FirstOrDefaultAsync(p => p.UserId == id);
+
+            if (profile != null)
+            {
+                profile.FullName = fullName;
+                profile.GoalType = goalType;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManageUsers");
+        }
+
 
         public async Task<IActionResult> ViewFeedback()
         {
@@ -55,6 +134,7 @@ namespace StayFit.Controllers
 
             return View(feedbacks);
         }
+
         [HttpPost]
     public async Task<IActionResult> SendAnnouncement(string message)
     {

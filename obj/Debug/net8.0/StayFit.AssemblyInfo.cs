@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StayFit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a2fcd08a8acedcf61f6c3ba607c125dc1b7a2a5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71709af55c9e7692b08f8e28be95ce8d0d268cf9")]
 [assembly: System.Reflection.AssemblyProductAttribute("StayFit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StayFit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
